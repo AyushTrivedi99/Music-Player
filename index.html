@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Player By Ayush Trivedi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="main_div">
+        <div class="music_container">
+            <h2 id="title">Dreamer</h2>
+            <h3 id="artist">Alan Walker</h3>
+            <div class="img_container">
+                <img src="images/music-1.jpeg" alt="" />
+            </div>
+            <audio src="Musics/music-1.m4a"></audio>
+            <!-- Controls  -->
+            <div class="music_controls">
+                <i class="fa fa-backward" id="prev" title="Previous"></i>
+                <i class="fa fa-play main_button" id="play" title="Play"></i>
+                <i class="fa fa-forward" id="next" title="Next"></i>
+            </div>
+        </div>
+    </div>
+    <script>
+        const music = document.querySelector("audio");
+        const img = document.querySelector("img")
+        const play = document.getElementById("play");
+        const title = document.getElementById("title");
+        const artist = document.getElementById("artist");
+        const prev = document.getElementById("prev");
+        const next = document.getElementById("next");
+
+        const songs = [
+            {
+                name: "music-1",
+                title: "Dreamer",
+                artist: "Alan Walker",
+            },
+            {
+                name: "music-2",
+                title: "No Money",
+                artist: "Clarx & Zaug",
+            },
+            {
+                name: "music-3",
+                title: "Over the Sun",
+                artist: "Coopex",
+            },
+            {
+                name: "music-4",
+                title: "Closer",
+                artist: "ROY KNOX",
+            },
+            {
+                name: "music-5",
+                title: "BE THE ONE",
+                artist: "Sam Day",
+            },
+        ];
+
+        let isPlaying = false;
+
+        const playMusic = () => {
+            music.play();
+            isPlaying = true;
+            play.classList.replace("fa-play", "fa-pause");
+            img.classList.add("anime");
+        };
+
+        const pauseMusic = () => {
+            music.pause();
+            isPlaying = false;
+            play.classList.replace("fa-pause", "fa-play");
+            img.classList.remove("anime");
+        };
+
+        play.addEventListener('click', () => {
+            if(isPlaying){
+                pauseMusic();
+            }else{
+                playMusic();
+            }
+
+            // isPlaying ? pauseMusic : playMusic();
+        });
+
+        // change 
+
+        const loadSong = (songs) =>{
+            title.textContent = songs.title;
+            artist.textContent = songs.artist;
+            music.src = "Musics/" +songs.name+ ".m4a";
+            img.src = "images/" +songs.name+ ".jpeg";
+        };
+
+        songIndex = 0;
+        // loadSong(songs[2]);
+
+        const nextSong = () => {
+            songIndex = (songIndex + 1) % songs.length;
+        loadSong(songs[songIndex]);
+        playMusic();
+        };
+        const prevSong = () => {
+            songIndex = (songIndex - 1 + songs.length) % songs.length;
+        loadSong(songs[songIndex]);
+        playMusic();
+        };
+
+        next.addEventListener("click", nextSong);
+        prev.addEventListener("click", prevSong);
+    </script>
+</body>
+</html>
